@@ -10,8 +10,6 @@ import java.nio.channels.FileLock;
 
 @Component
 public class FileLockHelper {
-    @Value("${limit.rps:2}")
-    private static final int RPS = 2;
     //保存时间的长度
     private static final int TIME_LEN = 10;
 
@@ -20,7 +18,7 @@ public class FileLockHelper {
     private FileLock lock = null;
     @Value("${limit.file.name:ping.lock}")
     private static final String LOCK_FILE = "ping.lock";
-    public void close() throws Exception {
+    public void close() throws IOException {
         if (channel != null) {
             channel.close();
             channel = null;
@@ -30,7 +28,7 @@ public class FileLockHelper {
             file = null;
         }
     }
-    public void open() throws Exception {
+    public void open() throws IOException {
         close();
         file = new RandomAccessFile(LOCK_FILE, "rw");
         channel = file.getChannel();

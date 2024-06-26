@@ -23,12 +23,8 @@ public class PongHandler {
     }
 
     private Mono<String> sayHello(ServerRequest request) {
-        Optional<String> paramOptional =  request.queryParam("say") ;
-        String sayContent =  "" ;
-        if ( Optional.ofNullable(paramOptional).isPresent() ) {
-            sayContent = paramOptional.get() ;
-        }
-        return Mono.just(  sayContent.equalsIgnoreCase("Hello")?"World" :"Please say 'Hello'." ) ;
+        String sayContentl = request.queryParam("say").orElse("");
+        return Mono.just(  sayContentl.equalsIgnoreCase("Hello")?"World" :"Please say 'Hello'." ) ;
     }
 
 }

@@ -17,6 +17,5 @@ class PingScheduledTaskTest extends Specification {
         where:
         canPing << [ "false","true"]
 
-
     }
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,7 +17,7 @@ public class PingLimitControl {
     private FileLockHelper fileLockHelper;
     //每秒最多2个send pong 请求
     @Value("${limit.rps:2}")
-    private static  int RPS = 2;
+    private static int rps = 2;
 
     //保存时间的长度
     private static final int TIME_LEN = 10;
@@ -33,7 +31,7 @@ public class PingLimitControl {
         boolean canSendPing = false;
         try {
             fileLockHelper.open();
-            for (long i = 0; i < RPS; i++) {
+            for (long i = 0; i < rps; i++) {
                 if (fileLockHelper.lock(i)) {
                     boolean oneCanSendPing = checkLimit(fileLockHelper.getFile(), i);
                     fileLockHelper.unlock();
@@ -59,6 +57,7 @@ public class PingLimitControl {
         if (timeStr.trim().isEmpty()) {
             return 0;
         }
+
         return Long.parseLong(timeStr.trim());
     }
 
@@ -66,7 +65,6 @@ public class PingLimitControl {
         try {
             long nowSecond = System.currentTimeMillis() / 1000;
             long timeInBucket = readBucketTime(file, bucketIndex);
-          //  log.info(dtf.format(LocalDateTime.now()) + " bucketIndex " + bucketIndex + " timeInBucket:" + timeInBucket + " nowSecond:" + nowSecond);
             if (timeInBucket >= nowSecond) {
                 log.info(dtf.format(LocalDateTime.now()) + " bucketIndex " + bucketIndex + " block!");
                 return false;

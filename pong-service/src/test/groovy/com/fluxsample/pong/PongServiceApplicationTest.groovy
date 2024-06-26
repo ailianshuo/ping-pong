@@ -1,15 +1,16 @@
-package com.fluxsample.ping;
+package com.fluxsample.pong
 
 import spock.lang.Specification;
 
-class PingClientApplicationTests extends Specification {
+class PongServiceApplicationTest extends Specification {
 
     def "test application"() {
         given:
 
         String[] args = [];
+
         when:
-        PingServiceApplication.main(args)
+        PongServiceApplication.main(args)
 
         then:
         noExceptionThrown()

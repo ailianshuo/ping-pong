@@ -52,20 +52,5 @@ class PingLimitControlTest extends Specification {
         then:
         !result
     }
-//
-//    def "call should print start and stop lock messages"() {
-//        setup:
-//        // Mock static methods in LocalDateTime and Files
-//        GroovyMock(LocalDateTime, global: true)
-//        GroovyMock(Files, global: true)
-//        LocalDateTime.now() >> LocalDateTime.of(2020, 1, 1, 12, 0)
-//        Files.exists(Path.of("ping.lock")) >> true
-//        Files.createFile(Path.of("ping.lock")) >> null
-//        def limitControl = new PingLimitControl()
-//        when:
-//        def result = limitControl.isCanSendPing()
-//
-//        then:
-//        2 * LocalDateTime.now() // Verifies LocalDateTime.now() was called twice
-//    }
+
 }

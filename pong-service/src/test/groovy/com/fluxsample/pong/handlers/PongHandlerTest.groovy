@@ -18,17 +18,17 @@ class PongHandlerTest extends Specification {
         def request = Mock(ServerRequest.class)
         when:
         pongLimitControl.isCanPong() >> Boolean.valueOf(canPong)
-        request.queryParam(paraName) >> Optional.of(paraValue)
+        request.queryParam(_) >> Optional.of(paraValue)
         Mono<ServerResponse> responseMono = handler.handleSay(request)
         ServerResponse serviceResponse = responseMono.block()
         then:
         serviceResponse.statusCode().value() == responseContent
         where:
-        canPong |paraName | paraValue ||responseContent
-        "true" |"say" |"Hello" ||HttpStatus.OK.value()
-        "true" |"say"|"hi" ||HttpStatus.OK.value()
-        "false"|"say" |"hello" || HttpStatus.TOO_MANY_REQUESTS.value()
-        "true" |"" |"" || HttpStatus.OK.value()
+        canPong |paraValue ||responseContent
+        "true"  |"Hello"   ||HttpStatus.OK.value()
+        "true"  |"hi"      ||HttpStatus.OK.value()
+        "false" |"hello"   ||HttpStatus.TOO_MANY_REQUESTS.value()
+        "true"  |""        ||HttpStatus.OK.value()
 
     }
 
