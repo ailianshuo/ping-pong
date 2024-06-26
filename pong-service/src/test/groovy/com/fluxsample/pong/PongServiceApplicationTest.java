@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-public class PongServiceApplication {
+public class PongServiceApplicationTest {
 
     public static void main(String[] args) {
-        SpringApplication.run(PongServiceApplication.class, args);
+        SpringApplication.run(PongServiceApplicationTest.class, args);
     }
 
 }

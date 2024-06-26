@@ -33,11 +33,11 @@ public class PingClient {
                 .bodyToMono(String.class)
                 .onErrorMap(WebClientResponseException.class, exception -> {
                     if (exception.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
-                        log.error("Request send & Pong throttled it");
+                        log.warn("Request send & Pong throttled it");
                     } else if (exception.getStatusCode() == HttpStatus.SERVICE_UNAVAILABLE) {
-                        log.error("Pong service is unavailable");
+                        log.warn("Pong service is unavailable");
                     } else {
-                        log.error(exception.getMessage());
+                        log.warn(exception.getMessage());
                     }
                     return exception;
                 }) ;
