@@ -9,11 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PingScheduledTask {
 
-    @Autowired
-    private PingClient pingClient;
 
-    @Autowired
-    private PingLimitControl pingLimitControl;
+    private final PingClient pingClient;
+
+
+    private final PingLimitControl pingLimitControl;
+
+    public PingScheduledTask(PingClient pingClient, PingLimitControl pingLimitControl) {
+        this.pingClient = pingClient;
+        this.pingLimitControl = pingLimitControl;
+    }
+
     @Scheduled(fixedRate = 1000)
     public void excecutePing() {
         log.info("start ping");

@@ -27,6 +27,4 @@ class FileLockHelperTest extends Specification {
         boolLock == false
     }
 
-
-
 }

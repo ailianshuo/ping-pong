@@ -8,7 +8,7 @@ class AllRoutersTest extends Specification {
     def "test all router"() {
         given:
         def pongLimitControl = Mock(PongLimitControl.class)
-        def handler = new PongHandler(pongLimitControl:pongLimitControl)
+        def handler = new PongHandler(pongLimitControl)
         def allRouters = new AllRouters()
         when:
         def responseMono = allRouters.pongRouter(handler)

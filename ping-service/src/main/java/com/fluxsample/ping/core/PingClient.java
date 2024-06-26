@@ -1,6 +1,7 @@
 package com.fluxsample.ping.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,13 +15,14 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class PingClient {
-
+    @Value("${pong.url}")
+    private String pongUrl = "http://127.0.0.1:8666" ;
     private final WebClient webClient ;
     public PingClient(WebClient.Builder builder)
     {
 
         this.webClient = builder
-                .baseUrl("http://127.0.0.1:8666")
+                .baseUrl(pongUrl)
                 .build();
     }
     // 向pop服务发"Hello"
@@ -43,9 +45,9 @@ public class PingClient {
     public Function<WebClientResponseException, Throwable> getErrorMap() {
         return exception -> {
             if (exception.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
-                log.warn("Request send & Pong throttled it");
+                log.warn("Request send & Pong throttled it.");
             } else if (exception.getStatusCode() == HttpStatus.SERVICE_UNAVAILABLE) {
-                log.warn("Pong service is unavailable");
+                log.warn("Pong service is unavailable.");
             } else {
                 log.warn(exception.getMessage());
             }

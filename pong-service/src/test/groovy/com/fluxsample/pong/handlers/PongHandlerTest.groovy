@@ -14,7 +14,7 @@ class PongHandlerTest extends Specification {
     def "say hello"() {
         given:
         def pongLimitControl = Mock(PongLimitControl.class)
-        def handler = new PongHandler(pongLimitControl:pongLimitControl)
+        def handler = new PongHandler(pongLimitControl)
         def request = Mock(ServerRequest.class)
         when:
         pongLimitControl.isCanPong() >> Boolean.valueOf(canPong)

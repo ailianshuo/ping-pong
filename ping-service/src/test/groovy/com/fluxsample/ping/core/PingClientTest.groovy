@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.util.function.Consumer
 import java.util.function.Function
 
 @SpringBootTest
@@ -33,6 +34,9 @@ class PingClientTest extends Specification {
         headerUriSpec.retrieve() >> responseSpec
         responseSpec.bodyToMono(_) >> mono
         mono.onErrorMap(_, _) >> mono
+        Consumer<String> consumer = {}
+        mono.subscribe(consumer) >> {args -> args[0].accept("Hello")}
+
         def response = pingClient.sayHello()
         then:
         response != null

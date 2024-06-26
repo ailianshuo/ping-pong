@@ -8,7 +8,7 @@ class PingLimitControlTest extends Specification {
     def fileLockHelper
     void setup() {
         fileLockHelper = Spy(FileLockHelper)
-        limitControl = new PingLimitControl(fileLockHelper:fileLockHelper)
+        limitControl = new PingLimitControl(fileLockHelper)
         //删除lock文件，重置测试状态
         new File("ping.lock").delete()
     }

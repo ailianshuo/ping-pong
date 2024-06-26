@@ -17,7 +17,7 @@ public class FileLockHelper {
     private FileChannel channel = null;
     private FileLock lock = null;
     @Value("${limit.file.name:ping.lock}")
-    private static final String LOCK_FILE = "ping.lock";
+    private String lockFile = "ping.lock";
     public void close() throws IOException {
         if (channel != null) {
             channel.close();
@@ -30,13 +30,13 @@ public class FileLockHelper {
     }
     public void open() throws IOException {
         close();
-        file = new RandomAccessFile(LOCK_FILE, "rw");
+        file = new RandomAccessFile(lockFile, "rw");
         channel = file.getChannel();
     }
     public boolean lock(long bucketIndex) throws IOException {
         if (channel != null) {
             lock = channel.lock(bucketIndex * TIME_LEN, TIME_LEN, false);
-            return lock != null;
+            return true;
         }
         return false;
     }

@@ -13,19 +13,20 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Component
 public class PingLimitControl {
-    @Autowired
-    private FileLockHelper fileLockHelper;
+    private final FileLockHelper fileLockHelper;
     //每秒最多2个send pong 请求
     @Value("${limit.rps:2}")
-    private static int rps = 2;
+    private int rps = 2  ;
 
     //保存时间的长度
     private static final int TIME_LEN = 10;
 
     //共用锁文件
-    @Value("${limit.file.name:ping.lock}")
-    private static final String LOCK_FILE = "ping.lock";
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public PingLimitControl(FileLockHelper fileLockHelper) {
+        this.fileLockHelper = fileLockHelper;
+    }
 
     public boolean isCanSendPing() {
         boolean canSendPing = false;

@@ -8,7 +8,7 @@ class PingScheduledTaskTest extends Specification {
         given:
         def pingClient = Mock(PingClient)
         def pingLimitControl = Mock(PingLimitControl)
-        def pingScheduledTask = new PingScheduledTask(pingClient:pingClient,pingLimitControl:pingLimitControl)
+        def pingScheduledTask = new PingScheduledTask(pingClient,pingLimitControl)
         when:
         pingLimitControl.isCanSendPing() >> Boolean.valueOf(canPing)
         pingScheduledTask.excecutePing()
